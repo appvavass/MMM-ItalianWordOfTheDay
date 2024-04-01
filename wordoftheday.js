@@ -1,6 +1,6 @@
 // modules/translated-word/translated-word.js
 
-Module.register('translated-word', {
+Module.register('MMM-ItalianWordOfTheDay', {
 	word: '',
   
 	start: function() {
@@ -28,7 +28,7 @@ Module.register('translated-word', {
   
 	getDom: function() {
 	  const wrapper = document.createElement('div');
-	  wrapper.className = 'translated-word';
+	  wrapper.className = 'MMM-ItalianWordOfTheDay';
 	  wrapper.innerHTML = this.word;
 	  return wrapper;
 	}
