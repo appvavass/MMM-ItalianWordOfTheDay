@@ -29,7 +29,7 @@ Module.register('MMM-ItalianWordOfTheDay', {
     },
   
     getDom: function() {
-        const wrapper = document.createElement('div');
+        var wrapper = document.createElement('div');
         wrapper.className = 'MMM-ItalianWordOfTheDay';
         wrapper.innerHTML = "Initial Word: " + this.initialWord + "<br>New Word: " + this.word;
         return wrapper;
