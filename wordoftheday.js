@@ -4,7 +4,6 @@ Module.register('MMM-ItalianWordOfTheDay', {
 	word: '',
   
 	start: function() {
-	  // Make an AJAX request to retrieve the translated word
 	  this.getTranslatedWord();
 	  // Refresh the word every 30 seconds
 	  setInterval(() => {

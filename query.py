@@ -23,7 +23,5 @@ def extract_heading_50_content():
             print("Content with class 'heading-50' not found on the page.")
     else:
         print("Failed to fetch the webpage.")
-    return json.dumps(content_text.strip())
 
-a = extract_heading_50_content()
-print(a)
+    return json.dumps({"word":content_text.strip()})
