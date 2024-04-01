@@ -15,7 +15,7 @@ Module.register('translated-word', {
 	getTranslatedWord: function() {
 	  var self = this;
 	  var xhr = new XMLHttpRequest();
-	  xhr.open('GET', 'http://localhost:5000/get_word', true); // Replace with your Python script endpoint
+	  xhr.open('GET', 'query.py', true);
 	  xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 		  var response = JSON.parse(xhr.responseText);

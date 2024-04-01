@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import json
 
 def extract_heading_50_content():
     url = "https://dizionaripiu.zanichelli.it/cultura-e-attualita/le-parole-del-giorno/parola-del-giorno/"
@@ -22,7 +23,7 @@ def extract_heading_50_content():
             print("Content with class 'heading-50' not found on the page.")
     else:
         print("Failed to fetch the webpage.")
-    return content_text.strip()
+    return json.dumps(content_text.strip())
 
 a = extract_heading_50_content()
 print(a)
