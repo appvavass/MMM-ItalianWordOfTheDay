@@ -5,7 +5,7 @@
  * By Michael Teeuw https://michaelteeuw.nl
  * MIT Licensed.
  */
-Module.register("helloworld", {
+Module.register("MMM-ItalianWordOfTheDay", {
 	// Default module config.
 	defaults: {
 		text: "Hello World!"
