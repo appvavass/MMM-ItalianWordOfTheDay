@@ -33,5 +33,5 @@ Module.register('MMM-ItalianWordOfTheDay', {
         wrapper.className = 'MMM-ItalianWordOfTheDay';
         wrapper.innerHTML = "Initial Word: " + this.initialWord + "<br>New Word: " + this.word;
         return wrapper;
-    }
+    },
 });
