@@ -93,7 +93,7 @@ translateWord: function (italianWord) {
         var wordElement = document.createElement('div');
         var translationElement = document.createElement('div');
         wordElement.innerHTML = "Italian word: " + word;
-        translationElement.innerHTML = "Translation: " + translation;
+        translationElement.innerHTML = "Che in italiano significa: " + translation;
         wrapper.appendChild(wordElement);
         wrapper.appendChild(translationElement);
     } else if (this.data && this.data.error) {
