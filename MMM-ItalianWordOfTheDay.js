@@ -18,26 +18,49 @@ Module.register('MMM-ItalianWordOfTheDay', {
     },
 
     updateContent: function () {
-        var self = this;
-        // Call the function to fetch data from the webpage
-        this.extractHeading50Content("https://dizionaripiu.zanichelli.it/cultura-e-attualita/le-parole-del-giorno/parola-del-giorno/")
-            .then(data => {
-                if (data && data.word) {
-                    // Update module with data fetched from the webpage
-                    self.data.word = data.word;
-                    self.updateDom(); // Update the module
-                } else {
-                    // Set error message in module data
-                    self.data.error = 'Failed to fetch data.';
-                    self.updateDom(); // Update the module
-                }
-            })
-            .catch(error => {
+    var self = this;
+    // Call the function to fetch data from the webpage
+    this.extractHeading50Content("https://dizionaripiu.zanichelli.it/cultura-e-attualita/le-parole-del-giorno/parola-del-giorno/")
+        .then(data => {
+            if (data && data.word) {
+                // Store the fetched Italian word
+                self.data.word = data.word;
+                // Translate the Italian word to English
+                self.translateWord(data.word);
+            } else {
                 // Set error message in module data
-                self.data.error = error.message;
+                self.data.error = 'Failed to fetch data.';
                 self.updateDom(); // Update the module
-            });
-    },
+            }
+        })
+        .catch(error => {
+            // Set error message in module data
+            self.data.error = error.message;
+            self.updateDom(); // Update the module
+        });
+},
+
+translateWord: function (italianWord) {
+    var self = this;
+    var apiUrl = "https://api.mymemory.translated.net/get?q=" + encodeURI(italianWord) + "&langpair=it|en";
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.responseData && data.responseData.translatedText) {
+                // Update module with translated word
+                self.data.translation = data.responseData.translatedText;
+                self.updateDom(); // Update the module
+            } else {
+                throw new Error("Translation not found.");
+            }
+        })
+        .catch(error => {
+            // Set error message in module data
+            self.data.error = error.message;
+            self.updateDom(); // Update the module
+        });
+},
+
 
     extractHeading50Content: async function (url) {
         try {
@@ -55,25 +78,31 @@ Module.register('MMM-ItalianWordOfTheDay', {
             throw new Error("Failed to fetch the webpage: " + error.message);
         }
     },
+    
     getHeader: function() {
         return "Italian Word of The Day"},
         
     // Override dom generator.
     getDom: function () {
-        var wrapper = document.createElement('div');
+    var wrapper = document.createElement('div');
 
-        // Display fetched data or error message on the module
-        if (this.data && this.data.word) {
-            var word = this.data.word;
-            var wordElement = document.createElement('div');
-            wordElement.innerHTML = word;
-            wrapper.appendChild(wordElement);
-        } else if (this.data && this.data.error) {
-            var errorElement = document.createElement('div');
-            errorElement.innerHTML = 'Error: ' + this.data.error;
-            wrapper.appendChild(errorElement);
-        }
-
-        return wrapper;
+    // Display fetched data or error message on the module
+    if (this.data && this.data.word && this.data.translation) {
+        var word = this.data.word;
+        var translation = this.data.translation;
+        var wordElement = document.createElement('div');
+        var translationElement = document.createElement('div');
+        wordElement.innerHTML = "Italian word: " + word;
+        translationElement.innerHTML = "Translation: " + translation;
+        wrapper.appendChild(wordElement);
+        wrapper.appendChild(translationElement);
+    } else if (this.data && this.data.error) {
+        var errorElement = document.createElement('div');
+        errorElement.innerHTML = 'Error: ' + this.data.error;
+        wrapper.appendChild(errorElement);
     }
+
+    return wrapper;
+}
+
 });
