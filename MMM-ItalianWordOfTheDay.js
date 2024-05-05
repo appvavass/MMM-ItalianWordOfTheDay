@@ -62,23 +62,24 @@ translateWord: function (italianWord) {
 },
 
 
-    extractHeading50Content: async function (url) {
-        try {
-            const response = await fetch(url);
-            const html = await response.text();
-            const tree = new DOMParser().parseFromString(html, 'text/html');
-            const heading50Elements = tree.querySelectorAll('h1.heading-50');
-            if (heading50Elements.length > 0) {
-                const word = heading50Elements[0].textContent.trim();
-                return { word };
-            } else {
-                throw new Error("Content with class 'heading-50' not found on the page.");
-            }
-        } catch (error) {
-            throw new Error("Failed to fetch the webpage: " + error.message);
+extractHeading50Content: async function (url) {
+    try {
+        const response = await fetch(url);
+        const html = await response.text();
+        const tree = new DOMParser().parseFromString(html, 'text/html');
+        const heading50Elements = tree.querySelectorAll('h1.heading-50');
+        if (heading50Elements.length > 0) {
+            const textContent = heading50Elements[0].textContent.trim();
+            const word = textContent.split('/')[0].replace(/^\d+\s*/, '').trim();
+            return { word };
+        } else {
+            throw new Error("Content with class 'heading-50' not found on the page.");
         }
-    },
-    
+    } catch (error) {
+        throw new Error("Failed to fetch the webpage: " + error.message);
+    }
+},
+
     getHeader: function() {
         return "Italian Word of The Day"},
         
